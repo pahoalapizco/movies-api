@@ -1,14 +1,16 @@
 const express = require('express')
-const { moviesMock } = require('../utils/mocks/movies')
+const MoviesServices = require('../services/movies')
 
 function moviesApi (app) {
   const router = express.Router()
+  const moviesServices = new MoviesServices()
   
   app.use('/api/movies', router)
 
-  router.get('/', async function(req, res) {
+  router.get('/', async function(req, res, next) {
+    const { tags } = req.query
     try {
-      const movies = await Promise.resolve(moviesMock)
+      const movies = await moviesServices.getMovies({ tags })
 
       res.status(200).json({
         data: movies,
@@ -19,23 +21,24 @@ function moviesApi (app) {
     }
   })
 
-  router.get('/:movieId', async function(req, res) {
+  router.get('/:movieId', async function(req, res, next) {
     const { movieId } = req.params
     try {
-      const movies = await Promise.resolve(moviesMock.find(movie => movie.id === movieId))
+      const movie = await moviesServices.getMovie({ movieId })
 
       res.status(200).json({
-        data: movies,
-        message: 'Movie retrived'
+        data: movie,
+        message: 'Movie retrieved'
       })
     } catch (error) {
       next(error)
     }
   })
 
-  router.post('/', async function(req, res) {
+  router.post('/', async function(req, res, next) {
+    const { body: movie } = req 
     try {
-      const createdMovieId = await Promise.resolve(moviesMock[0].id)
+      const createdMovieId = await moviesServices.createMovie({ movie })
 
       res.status(201).json({
         data: createdMovieId,
@@ -46,10 +49,11 @@ function moviesApi (app) {
     }
   })
 
-  router.put('/:movieId', async function(req, res) {
+  router.put('/:movieId', async function(req, res, next) {
     const { movieId } = req.params
+    const { body: movie } = req 
     try {
-      const updatedMovieId = await Promise.resolve(moviesMock[0].id)
+      const updatedMovieId = await moviesServices.updateMovie({ movieId, movie })
 
       res.status(200).json({
         data: updatedMovieId,
@@ -60,10 +64,10 @@ function moviesApi (app) {
     }
   })
 
-  router.delete('/:movieId', async function(req, res) {
+  router.delete('/:movieId', async function(req, res, next) {
     const { movieId } = req.params
     try {
-      const deletedMovieId = await Promise.resolve(moviesMock[0].id)
+      const deletedMovieId = await moviesServices.deleteMovie({ movieId })
 
       res.status(200).json({
         data: deletedMovieId,
