@@ -4,6 +4,8 @@ const moviesApi = require('./routes/movies')
 
 const app = express()
 
+// body parser
+app.use(express.json())
 moviesApi(app)
 
 
