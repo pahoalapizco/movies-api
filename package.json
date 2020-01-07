@@ -4,7 +4,7 @@
   "description": "A little API for movies",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node index",
+    "start": "set NODE_ENV=production && node index",
     "start:dev": "set DEBUG=app:* & nodemon index.js"
   },
   "author": "pahoalapizco",
