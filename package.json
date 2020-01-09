@@ -4,8 +4,8 @@
   "description": "A little API for movies",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=production && node index",
-    "start:dev": "DEBUG=app:* nodemon index.js",
+    "start": "set NODE_ENV=production && nodemon index",
+    "start:dev": "set DEBUG=app:* && nodemon index.js",
     "test": "mocha --exit",
     "cover": "nyc npm run test",
     "report": "nyc report --reporter=html && open coverage/index.html",
@@ -47,6 +47,11 @@
   },
   "nyc": {
     "all": true,
-    "includes": ["routes", "services", "lib", "utils"]
+    "includes": [
+      "routes",
+      "services",
+      "lib",
+      "utils"
+    ]
   }
 }

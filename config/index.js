@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const config = {
-  dev: process.env.NODE_ENV !== 'production',
+  dev: process.env.NODE_ENV ? false : true,
   port: process.env.PORT || 3000,
   cors: process.env.CORS,
   dbName: process.env.DB_NAME,
