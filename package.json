@@ -6,7 +6,9 @@
   "scripts": {
     "start": "set NODE_ENV=production && node index",
     "start:dev": "set DEBUG=app:* & nodemon index.js",
-    "test": "mocha --exit"
+    "test": "mocha --exit",
+    "cover": "nyc npm run test",
+    "report": "nyc report --reporter=html && open coverage/index.html"
   },
   "author": "pahoalapizco",
   "license": "MIT",
@@ -18,6 +20,7 @@
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
     "nodemon": "^2.0.2",
+    "nyc": "^15.0.0",
     "prettier": "^1.19.1"
   },
   "dependencies": {
@@ -40,5 +43,9 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "nyc": {
+    "all": true,
+    "includes": ["routes", "services", "lib", "utils"]
   }
 }
