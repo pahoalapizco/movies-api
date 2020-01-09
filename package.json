@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "set NODE_ENV=production && node index",
-    "start:dev": "set DEBUG=app:* & nodemon index.js",
+    "start:dev": "DEBUG=app:* nodemon index.js",
     "test": "mocha --exit",
     "cover": "nyc npm run test",
-    "report": "nyc report --reporter=html && open coverage/index.html"
+    "report": "nyc report --reporter=html && open coverage/index.html",
+    "inspect": "DEBUG=express:*,app* nodemon inspect index.js"
   },
   "author": "pahoalapizco",
   "license": "MIT",
